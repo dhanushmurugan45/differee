@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Level 5 | Mookie Quest</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+    }
+
+    /* 🔹 Background video styling */
+    #bgVideo {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;
+      z-index: -2;
+      object-fit: cover;
+    }
+
+    /* 🔹 Wrong answer video styling */
+    #wrongVideo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+      z-index: -1;
+    }
+
+    /* 🔹 Content box with lighter transparency */
+    .content {
+      position: relative;
+      z-index: 1;
+      background-color: rgba(0, 0, 0, 0.4); /* Lighter transparency */
+      padding: 30px;
+      border-radius: 15px;
+      max-width: 500px;
+      margin: auto;
+      top: 50%;
+      transform: translateY(-50%);
+      text-align: center;
+      color: #eff315;
+      border: 2px solid #ff4d4d;
+      backdrop-filter: blur(2px); /* Slight blur for better video visibility */
+    }
+
+    h2 {
+      font-size: 1.2em;
+      margin-bottom: 15px;
+      color: #eff315;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Text shadow for better readability */
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    input[type="text"] {
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 2px solid #ff4d4d;
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      text-align: center;
+    }
+
+    #submitBtn {
+      margin-top: 20px;
+      padding: 12px;
+      background-color: #ff1a1a;
+      color: white;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    #submitBtn:hover {
+      background-color: #e60000;
+    }
+
+    #message {
+      margin-top: 15px;
+      font-weight: bold;
+      color: yellow;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    }
+
+    /* 🔹 Correct answer image */
+    #correctImg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+      z-index: 9999;
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- 🔹 Background video -->
+<video id="bgVideo" autoplay muted loop playsinline>
+  <source src="Girl_Dancing_To_Tamil_Rap.mp4" type="video/mp4">
+</video>
+
+
+<!-- 🔹 Correct answer image -->
+<img src="linkedin pr.jpg" id="correctImg" class="feedback-image" />
+
+<!-- 🔹 Audio -->
+<audio id="bgmusic" autoplay loop>
+  <source src="looptrack.mp3" type="audio/mpeg">
+</audio>
+<audio id="correctSound" src="correct.mp3"></audio>
+<audio id="wrongSound" src="wrong.mp3"></audio>
+
+<!-- 🔹 Page Content -->
+<div class="content">
+  <h2>Konjam different aah intha game aaduvom</h2>
+  <h2>Epdi nah ne sonnathu vachi oru question</h2>
+  <h2>Unakku pudicha 5 per, but ithu ne sonnathu vachu nan guess panna ranking time illa seekiram 12:00pm kku delete agum</h2>
+
+  <div class="input-group">
+    <input type="text" id="ans1" placeholder="person 1" />
+    <input type="text" id="ans2" placeholder="person 2" />
+    <input type="text" id="ans3" placeholder="person 3" />
+    <input type="text" id="ans4" placeholder="person 4" />
+    <input type="text" id="ans5" placeholder="person 5" />
+  </div>
+
+  <button id="submitBtn">Submit</button>
+  <div id="message"></div>
+</div>
+
+<script>
+const correctAnswers = ["harshitha","dhanush","vedha","nandini","susithra"];
+const bgmusic = document.getElementById("bgmusic");
+const correctSound = document.getElementById("correctSound");
+const wrongSound = document.getElementById("wrongSound");
+const bgVideo = document.getElementById("bgVideo");
+const wrongVideo = document.getElementById("wrongVideo");
+const correctImg = document.getElementById("correctImg");
+const message = document.getElementById("message");
+
+function checkAnswers() {
+  const userInputs = [
+    document.getElementById("ans1").value.trim().toLowerCase(),
+    document.getElementById("ans2").value.trim().toLowerCase(),
+    document.getElementById("ans3").value.trim().toLowerCase(),
+    document.getElementById("ans4").value.trim().toLowerCase(),
+    document.getElementById("ans5").value.trim().toLowerCase()
+  ];
+
+  const matched = userInputs.every(ans => correctAnswers.includes(ans));
+  bgmusic.pause();
+
+  if (matched) {
+    correctImg.style.display = "block";
+    correctSound.play();
+    message.textContent = "Correct! Moving to Reward Page...";
+    correctSound.onended = () => {
+      localStorage.setItem("level", 6);
+      window.location.href = "reward5.html";
+    };
+  } else {
+    wrongVideo.style.display = "block";
+    wrongVideo.play();
+    wrongSound.play();
+    message.textContent = "Wrong answer! Try again.";
+
+    setTimeout(() => {
+      wrongVideo.style.display = "none";
+      wrongVideo.pause();
+      bgVideo.style.display = "block";
+      bgmusic.play();
+    }, 3000);
+  }
+}
+
+document.getElementById("submitBtn").addEventListener("click", checkAnswers);
+</script>
+
+</body>
+</html>
