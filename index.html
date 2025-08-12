@@ -36,11 +36,11 @@
       z-index: -1;
     }
 
-    /* 🔹 Content box with lighter transparency */
+    /* 🔹 Content box */
     .content {
       position: relative;
       z-index: 1;
-      background-color: rgba(0, 0, 0, 0.4); /* Lighter transparency */
+      background-color: rgba(0, 0, 0, 0.4);
       padding: 30px;
       border-radius: 15px;
       max-width: 500px;
@@ -50,14 +50,14 @@
       text-align: center;
       color: #eff315;
       border: 2px solid #ff4d4d;
-      backdrop-filter: blur(2px); /* Slight blur for better video visibility */
+      backdrop-filter: blur(2px);
     }
 
     h2 {
       font-size: 1.2em;
       margin-bottom: 15px;
       color: #eff315;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Text shadow for better readability */
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
     }
 
     .input-group {
@@ -116,23 +116,12 @@
 <body>
 
 <!-- 🔹 Background video -->
-<video id="bgVideo" autoplay muted loop playsinline>
-  <source src="Girl_Dancing_To_Tamil_Rap.mp4" type="video/mp4">
-</video>
-<video 
-  id="bgVideo" 
-  autoplay 
-  muted 
-  loop 
-  playsinline 
-  webkit-playsinline 
-  preload="auto"
->
+<video id="bgVideo" muted loop playsinline webkit-playsinline preload="auto">
   <source src="Girl_Dancing_To_Tamil_Rap.mp4" type="video/mp4">
 </video>
 
 <!-- 🔹 Wrong answer video -->
-<video id="wrongVideo" autoplay muted loop playsinline>
+<video id="wrongVideo" muted loop playsinline webkit-playsinline preload="auto">
   <source src="wrong-answer-video.mp4" type="video/mp4">
 </video>
 
@@ -174,6 +163,17 @@ const wrongVideo = document.getElementById("wrongVideo");
 const correctImg = document.getElementById("correctImg");
 const message = document.getElementById("message");
 
+// ✅ Start video when user clicks any input box
+let videoStarted = false;
+document.querySelectorAll('input[type="text"]').forEach(input => {
+  input.addEventListener('focus', () => {
+    if (!videoStarted) {
+      bgVideo.play().catch(err => console.log("Autoplay blocked:", err));
+      videoStarted = true;
+    }
+  });
+});
+
 function checkAnswers() {
   const userInputs = [
     document.getElementById("ans1").value.trim().toLowerCase(),
@@ -210,4 +210,6 @@ function checkAnswers() {
 }
 
 document.getElementById("submitBtn").addEventListener("click", checkAnswers);
+</script>
+</body>
 </html>
