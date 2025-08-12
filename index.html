@@ -116,14 +116,21 @@
 <body>
 
 <!-- 🔹 Background video -->
-<video id="bgVideo" muted loop playsinline webkit-playsinline preload="auto">
+<video 
+  id="bgVideo" 
+  muted 
+  loop 
+  playsinline 
+  webkit-playsinline 
+  preload="auto"
+  style="position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:-2;"
+>
   <source src="Girl_Dancing_To_Tamil_Rap.mp4" type="video/mp4">
 </video>
 
-<!-- 🔹 Wrong answer video -->
-<video id="wrongVideo" muted loop playsinline webkit-playsinline preload="auto">
-  <source src="wrong-answer-video.mp4" type="video/mp4">
-</video>
+
+
+
 
 <!-- 🔹 Correct answer image -->
 <img src="linkedin pr.jpg" id="correctImg" class="feedback-image" />
