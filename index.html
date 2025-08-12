@@ -119,7 +119,22 @@
 <video id="bgVideo" autoplay muted loop playsinline>
   <source src="Girl_Dancing_To_Tamil_Rap.mp4" type="video/mp4">
 </video>
+<video 
+  id="bgVideo" 
+  autoplay 
+  muted 
+  loop 
+  playsinline 
+  webkit-playsinline 
+  preload="auto"
+>
+  <source src="Girl_Dancing_To_Tamil_Rap.mp4" type="video/mp4">
+</video>
 
+<!-- 🔹 Wrong answer video -->
+<video id="wrongVideo" autoplay muted loop playsinline>
+  <source src="wrong-answer-video.mp4" type="video/mp4">
+</video>
 
 <!-- 🔹 Correct answer image -->
 <img src="linkedin pr.jpg" id="correctImg" class="feedback-image" />
@@ -195,7 +210,4 @@ function checkAnswers() {
 }
 
 document.getElementById("submitBtn").addEventListener("click", checkAnswers);
-</script>
-
-</body>
 </html>
